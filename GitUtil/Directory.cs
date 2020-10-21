@@ -1,24 +1,32 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace GitUtil {
     
     public static class Directory {
 
-        private static List<string> directories = new List<string>();
+        public static List<string> directories = new List<string>();
 
         public static void RecurseDirectories(string baseDirectory) {
             GetDirectories(baseDirectory);
         }
         private static void GetDirectories(string directory) {
-            ChangeDirectory(directory);
-            var dirs = System.IO.Directory.EnumerateDirectories(CurrentDirectory());
-            directories.AddRange(dirs);
+            var dirs = System.IO.Directory.EnumerateDirectories(directory).ToList();
+            dirs.ForEach(dir => {
+                if(IsGitRepository(dir)) {
+                    var path = dir.Substring(0, dir.Length - 4);
+                    directories.Add(path);
+                }
+            });
             foreach(var dir in dirs) {
                 GetDirectories(dir);
             }
+        }
+        private static bool IsGitRepository(string directory) {
+            return System.IO.Path.GetExtension(directory).Equals(".git");
         }
         public static string CurrentDirectory() {
             return System.IO.Directory.GetCurrentDirectory();

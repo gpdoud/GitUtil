@@ -10,14 +10,14 @@ namespace GitUtil {
         Process git = new Process();
 
         public void Status() {
-            git.StartInfo.Arguments = "status";
+            git.StartInfo.Arguments = "status -s";
             git.StartInfo.UseShellExecute = false;
             git.StartInfo.RedirectStandardOutput = true;
             git.StartInfo.CreateNoWindow = true;
             git.Start();
             git.WaitForExit();
             string result = git.StandardOutput.ReadToEnd();
-            Console.WriteLine(result);
+            Console.WriteLine($"{result}");
         }
 
         public Git() {

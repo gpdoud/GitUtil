@@ -6,8 +6,11 @@ namespace GitUtil {
         static void Main(string[] args) {
 
             var git = new Git();
-            Directory.RecurseDirectories(@"c:\repos\aoc\aoc-dfs1client");
-            git.Status();
+            Directory.RecurseDirectories(@"c:\repos\bootcamp");
+            Directory.directories.ForEach(dir => {
+                Directory.ChangeDirectory(dir);
+                git.Status();
+            });
 
         }
     }
