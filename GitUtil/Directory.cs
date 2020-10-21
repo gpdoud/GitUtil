@@ -13,6 +13,11 @@ namespace GitUtil {
         public static void RecurseDirectories(string baseDirectory) {
             GetDirectories(baseDirectory);
         }
+        public static string GetRepositoryName(string directory) {
+            var pos = directory.LastIndexOf('\\');
+            var repo = directory.Substring(pos + 1);
+            return repo;
+        }
         private static void GetDirectories(string directory) {
             var dirs = System.IO.Directory.EnumerateDirectories(directory).ToList();
             dirs.ForEach(dir => {
