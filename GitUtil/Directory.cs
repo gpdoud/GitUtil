@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using static System.IO.Path;
+using static System.IO.Directory;
 
 namespace GitUtil {
     
@@ -13,15 +15,11 @@ namespace GitUtil {
         public static void RecurseDirectories(string baseDirectory) {
             GetDirectories(baseDirectory);
         }
-        public static string GetRepositoryName(string directory) {
-            var pos = directory.LastIndexOf('\\');
-            var repo = directory.Substring(pos + 1);
-            return repo;
-        }
         private static void GetDirectories(string directory) {
-            var dirs = System.IO.Directory.EnumerateDirectories(directory).ToList();
+            var dirs = EnumerateDirectories(directory).ToList();
             dirs.ForEach(dir => {
                 if(IsGitRepository(dir)) {
+                    GetRepositoryName(dir);
                     var path = dir.Substring(0, dir.Length - 4);
                     directories.Add(path);
                 }
@@ -30,14 +28,18 @@ namespace GitUtil {
                 GetDirectories(dir);
             }
         }
+        public static string? GetRepositoryName(string directory) {
+            var dir = GetDirectoryName(directory);
+            return GetFileName(dir);
+        }
         private static bool IsGitRepository(string directory) {
-            return System.IO.Path.GetExtension(directory).Equals(".git");
+            return GetExtension(directory).Equals(".git");
         }
         public static string CurrentDirectory() {
-            return System.IO.Directory.GetCurrentDirectory();
+            return GetCurrentDirectory();
         }
         public static void ChangeDirectory(string newDirectory) {
-            System.IO.Directory.SetCurrentDirectory(newDirectory);
+            SetCurrentDirectory(newDirectory);
         }
     }
 }
