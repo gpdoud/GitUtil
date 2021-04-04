@@ -4,7 +4,9 @@ using System.Diagnostics;
 namespace GitUtil {
     class Program {
         static void Main(string[] args) {
-
+            foreach(var str in args) {
+                Console.WriteLine($"{str}");
+            }
             var gh = new GitHub();
             var repos = Directory.GetDirectories(@"/Users/gpdoud/Repos");
             repos.ForEach(dir => {
