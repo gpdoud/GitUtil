@@ -8,56 +8,53 @@ namespace GitUtil {
 
     public class Git {
 
-        Process git = new Process();
+        Process proc = new Process();
+        public string Path { get; set; }
+
+        private string Execute(string gitCommand, string args) {
+            proc.StartInfo.Arguments = $"-C {Path} {gitCommand} {args}";
+            proc.Start();
+            proc.WaitForExit();
+            string result = proc.StandardOutput.ReadToEnd();
+            Console.WriteLine($"[DEBUG] git command: {gitCommand} response: {result}");
+            return result.Trim();
+        }
 
         public bool RepoCommit() {
-            git.StartInfo.Arguments = "commit -q -m \"Committed by GitUtil\"";
-            git.Start();
-            git.WaitForExit();
-            string result = git.StandardOutput.ReadToEnd();
-            Console.WriteLine($"[DEBUG] git commit response: {result}");
+            var result = Execute("commit", "-q -m \"Committed by GitUtil\"");
             return result.Trim().Length != 0;
         }
 
         public bool StageAllFiles() {
-            git.StartInfo.Arguments = "add .";
-            git.Start();
-            git.WaitForExit();
-            string result = git.StandardOutput.ReadToEnd();
-            Console.WriteLine($"[DEBUG] git add response: {result}");
+            var result = Execute("add", ".");
             return result.Trim().Length == 0;
         }
 
         public bool RepoHasRemote() {
-            git.StartInfo.Arguments = "remote -v";
-            git.Start();
-            git.WaitForExit();
-            string result = git.StandardOutput.ReadToEnd();
+            var result = Execute("remote", "-v");
             return result.Trim().Length != 0;
         }
 
         public bool RepoIsClean() {
-            git.StartInfo.Arguments = "status -s";
-            git.Start();
-            git.WaitForExit();
-            string result = git.StandardOutput.ReadToEnd();
+            var result = Execute("status", "-s");
             return result.Trim().Length == 0;
         }
 
         private void SetGitProgramName() {
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
-                git.StartInfo.FileName = "Git.exe";
+                proc.StartInfo.FileName = "Git.exe";
             } else { 
-                git.StartInfo.FileName = "/usr/bin/git";
+                proc.StartInfo.FileName = "/usr/bin/git";
             }
         }
 
-        public Git() {
+        public Git(string path) {
+            this.Path = path;
             SetGitProgramName();
-            git.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            git.StartInfo.UseShellExecute = false;
-            git.StartInfo.RedirectStandardOutput = true;
-            git.StartInfo.CreateNoWindow = true;
+            proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            proc.StartInfo.UseShellExecute = false;
+            proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.CreateNoWindow = true;
         }
     }
 }

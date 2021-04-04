@@ -10,27 +10,30 @@ namespace GitUtil {
     
     public static class Directory {
 
-        public static List<string> directories = new List<string>();
-
-        public static void RecurseDirectories(string baseDirectory) {
-            GetDirectories(baseDirectory);
+        public static List<Repository> GetDirectories(string baseDirectory) {
+            List<Repository> repositories = new();
+            RecurseDirectories(baseDirectory, repositories);
+            return repositories;
         }
-        private static void GetDirectories(string directory) {
+        private static void RecurseDirectories(string directory, IList<Repository> repositories) {
             var dirs = EnumerateDirectories(directory).ToList();
             dirs.ForEach(dir => {
                 if(IsGitRepository(dir)) {
-                    GetRepositoryName(dir);
-                    var path = dir.Substring(0, dir.Length - 4);
-                    directories.Add(path);
+                    var repo = new Repository {
+                        Filepath = dir.Substring(0, dir.Length - 4),
+                        Name = GetRepositoryName(dir)
+                    };
+                    
+                    repositories.Add(repo);
                 }
             });
             foreach(var dir in dirs) {
-                GetDirectories(dir);
+                RecurseDirectories(dir, repositories);
             }
         }
-        public static string? GetRepositoryName(string directory) {
+        public static string GetRepositoryName(string directory) {
             var dir = GetDirectoryName(directory);
-            return GetFileName(dir);
+            return GetFileName(dir) ?? string.Empty;
         }
         private static bool IsGitRepository(string directory) {
             return GetExtension(directory).Equals(".git");
