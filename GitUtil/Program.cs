@@ -9,12 +9,14 @@ namespace GitUtil {
             var repos = Directory.GetDirectories(@"/Users/gpdoud/Repos");
             repos.ForEach(dir => {
                 var git = new Git(dir.Filepath);
+                Console.WriteLine($"- dir: {dir} ------------------------");
                 Console.WriteLine($"{dir} is clean: {git.RepoIsClean()}, has remote: {git.RepoHasRemote()}");
                 if(!git.RepoIsClean()) {
                     git.StageAllFiles();
                     git.RepoCommit();
                     Console.WriteLine($"{dir} is clean: {git.RepoIsClean()}");
                 }
+                Console.WriteLine("---------------------------");
             });
 
         }
