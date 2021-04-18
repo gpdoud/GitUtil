@@ -3,6 +3,9 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+# Security Tokens
+Dsi.GitUtil.Security/Tokens.cs
+
 # User-specific files
 *.rsuser
 *.suo

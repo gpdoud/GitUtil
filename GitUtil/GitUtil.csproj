@@ -9,4 +9,7 @@
   <ItemGroup>
     <None Remove="..\.editorconfig" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Dsi.GitUtil.Security\Dsi.GitUtil.Security.csproj" />
+  </ItemGroup>
 </Project>

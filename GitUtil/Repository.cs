@@ -5,6 +5,7 @@ namespace GitUtil {
 
         public string Name { get; set; } = string.Empty;
         public string Filepath { get; set; } = string.Empty;
+        public bool Private { get; set; }
 
         public Repository() {
         }
