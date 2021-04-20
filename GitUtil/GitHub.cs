@@ -15,17 +15,29 @@ namespace GitUtil {
         public string Path { get; set; }
         public string GitHubSecurityToken { get; init; }
         public HttpClient HttpClient { get; init; }
+        JsonSerializerOptions options = new JsonSerializerOptions {
+            PropertyNameCaseInsensitive = true
+        };
+
+
+        public async Task CreateRepo(string name) {
+            name = $"{name}-{DateTime.Now.Ticks}";
+            var repo = new { name };
+            var json = JsonSerializer.Serialize(repo, options);
+            var res = await Post($"/user/repos", json);
+        }
 
         public async Task GetRepo(string name) {
-            var res = await GetAsync($"/repos/gpdoud/GitUtil");
-            var options = new JsonSerializerOptions {
-                PropertyNameCaseInsensitive = true
-            };
+            var res = await Get($"/repos/gpdoud/{name}");
             var repo = JsonSerializer.Deserialize<Repository>(res, options);
         }
 
-        private async Task<string?> GetAsync(string url) {
+        private async Task<string?> Get(string url) {
             return await HttpClient.GetStringAsync($"{url}");
+        }
+        private async Task<HttpResponseMessage> Post(string url, string body) {
+            var content = new StringContent(body);
+            return await HttpClient.PostAsync(url, content);
         }
 
         public GitHub(string path) {
@@ -33,10 +45,9 @@ namespace GitUtil {
             GitHubSecurityToken = Dsi.GitUtil.Security.Tokens.GitHub;
             HttpClient = new HttpClient();
             HttpClient.BaseAddress = new Uri(@"https://api.github.com");
-            //HttpClient.DefaultRequestHeaders.Clear();
             HttpClient.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue("GitUtil", "1.0"));
             HttpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", GitHubSecurityToken);
+            HttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("token", GitHubSecurityToken);
         }
     }
 }

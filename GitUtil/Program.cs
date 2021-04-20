@@ -4,20 +4,22 @@ using System.Threading.Tasks;
 
 namespace GitUtil {
     class Program {
-        async static Task Main(string[] args) {
+        static async Task Main(string[] args) {
             var repos = Directory.GetDirectories("/Users/gpdoud/Repos/testgitutil");
-            foreach(var dir in repos) {
+            foreach (var dir in repos) {
                 var gh = new GitHub(dir.Filepath);
-                await gh.GetRepo(dir.Name);
                 var git = new Git(dir.Filepath);
                 Console.WriteLine($"- dir: {dir.Filepath} ------------------------");
-                Console.WriteLine($"{dir} is clean: {git.RepoIsClean()}, has remote: {git.RepoHasRemote()}");
-                if(!git.RepoHasRemote()) {
+                Console.WriteLine($"{dir} is clean: {git.IsClean()}, has remote: {git.HasRemote()}");
+                if (!git.HasRemote()) {
+                    await gh.CreateRepo(dir.Name);
+                    Console.WriteLine($"Branch: {git.CurrentBranch()} created.");
                 }
-                if(!git.RepoIsClean()) {
-                    git.StageAllFiles();
-                    git.RepoCommit();
-                    Console.WriteLine($"{dir} is clean: {git.RepoIsClean()}");
+                if (!git.IsClean()) {
+                    git.Stage();
+                    git.Commit();
+                    Console.WriteLine($"{dir} is clean: {git.IsClean()}");
+                    git.Push();
                 }
                 Console.WriteLine("---------------------------");
             }

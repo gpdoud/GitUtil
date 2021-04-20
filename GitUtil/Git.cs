@@ -20,22 +20,38 @@ namespace GitUtil {
             return result.Trim();
         }
 
-        public bool RepoCommit() {
+        public bool AddRemote(string GitHubRepo) {
+            var result = Execute("remote", $"add origin {GitHubRepo}");
+            return result.Trim().Length == 0;
+        }
+
+        public bool Push() {
+            var branch = CurrentBranch();
+            var result = Execute("push", $"origin {branch}");
+            return result.Trim().Length != 0;
+        }
+
+        public string CurrentBranch() {
+            var result = Execute("branch", "--show-current");
+            return result.Trim();
+        }
+
+        public bool Commit() {
             var result = Execute("commit", "-q -m \"Committed by GitUtil\"");
             return result.Trim().Length != 0;
         }
 
-        public bool StageAllFiles() {
+        public bool Stage() {
             var result = Execute("add", ".");
             return result.Trim().Length == 0;
         }
 
-        public bool RepoHasRemote() {
+        public bool HasRemote() {
             var result = Execute("remote", "-v");
             return result.Trim().Length != 0;
         }
 
-        public bool RepoIsClean() {
+        public bool IsClean() {
             var result = Execute("status", "-s");
             return result.Trim().Length == 0;
         }
