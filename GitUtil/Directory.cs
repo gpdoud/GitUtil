@@ -6,9 +6,16 @@ using System.Text;
 using static System.IO.Path;
 using static System.IO.Directory;
 
-namespace GitUtil {
+namespace Dsi.GitUtil {
     
     public static class Directory {
+
+        public static void RemoveDirectory(string directory) {
+            if(!System.IO.Directory.Exists(directory)) {
+                return;
+            }
+            System.IO.Directory.Delete(directory, true);
+        }
 
         public static List<Repository> GetDirectories(string baseDirectory) {
             List<Repository> repositories = new();

@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dsi.GitUtil.Security", "Dsi.GitUtil.Security\Dsi.GitUtil.Security.csproj", "{BFC27F90-9A0D-439C-B7F2-7ACFCF5C0CDA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dsi.Utility", "Dsi.Utility\Dsi.Utility.csproj", "{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,11 +28,17 @@ Global
 		{BFC27F90-9A0D-439C-B7F2-7ACFCF5C0CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFC27F90-9A0D-439C-B7F2-7ACFCF5C0CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFC27F90-9A0D-439C-B7F2-7ACFCF5C0CDA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95DA67F0-9EFC-4DC6-A86D-F05C1B76E0E0}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal

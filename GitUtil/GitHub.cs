@@ -9,7 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace GitUtil {
+namespace Dsi.GitUtil {
     class GitHub {
 
         public string Path { get; set; }
@@ -20,15 +20,22 @@ namespace GitUtil {
         };
 
 
-        public async Task CreateRepo(string name) {
+        public async Task<string> CreateRepo(string name) {
             name = $"{name}-{DateTime.Now.Ticks}";
             var repo = new { name };
             var json = JsonSerializer.Serialize(repo, options);
             var res = await Post($"/user/repos", json);
+            var json2 = await res.Content.ReadAsStringAsync();
+            var repo2 = JsonSerializer.Deserialize<Repository>(json2, options);
+            if(repo2 == null)
+                throw new Exception("Cannot deserialize CreateRepo() result!");
+            return $"{repo2.Html_url}.git";
         }
 
         public async Task GetRepo(string name) {
             var res = await Get($"/repos/gpdoud/{name}");
+            if (res == null)
+                throw new Exception("Cannot deserialize GetRepo() result!");
             var repo = JsonSerializer.Deserialize<Repository>(res, options);
         }
 

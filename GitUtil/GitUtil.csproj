@@ -4,6 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <RootNamespace>Dsi.GitUtil</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,5 +12,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dsi.GitUtil.Security\Dsi.GitUtil.Security.csproj" />
+    <ProjectReference Include="..\Dsi.Utility\Dsi.Utility.csproj" />
   </ItemGroup>
 </Project>
