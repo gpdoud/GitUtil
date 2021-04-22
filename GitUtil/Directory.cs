@@ -11,10 +11,17 @@ namespace Dsi.GitUtil {
     public static class Directory {
 
         public static void RemoveDirectory(string directory) {
-            if(!System.IO.Directory.Exists(directory)) {
-                return;
+            foreach(var dirname in System.IO.Directory.EnumerateDirectories(directory)) {
+                RemoveDirectory(dirname);
             }
-            System.IO.Directory.Delete(directory, true);
+            foreach(var filename in System.IO.Directory.EnumerateFiles(directory)) {
+                var file = new System.IO.FileInfo(filename);
+                file.Attributes = FileAttributes.Normal;
+                file.Delete();
+            }
+            var dir = new System.IO.DirectoryInfo(directory);
+            dir.Attributes = FileAttributes.Normal;
+            dir.Delete();
         }
 
         public static List<Repository> GetDirectories(string baseDirectory) {

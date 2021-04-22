@@ -3,16 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30615.102
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GitUtil", "GitUtil\GitUtil.csproj", "{4EF138E8-C1F5-470F-931C-285C7E29723A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GitUtil", "GitUtil\GitUtil.csproj", "{4EF138E8-C1F5-470F-931C-285C7E29723A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{65A74776-CB7A-4A88-9F5D-3EF6BEAB9A1A}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dsi.GitUtil.Security", "Dsi.GitUtil.Security\Dsi.GitUtil.Security.csproj", "{BFC27F90-9A0D-439C-B7F2-7ACFCF5C0CDA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dsi.GitUtil.Security", "Dsi.GitUtil.Security\Dsi.GitUtil.Security.csproj", "{BFC27F90-9A0D-439C-B7F2-7ACFCF5C0CDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dsi.Utility", "Dsi.Utility\Dsi.Utility.csproj", "{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dsi.Utility", "..\Dsi.Utility\Dsi.Utility.csproj", "{61F4CF94-C9DE-486B-BF97-5F716F36E34F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,17 +28,15 @@ Global
 		{BFC27F90-9A0D-439C-B7F2-7ACFCF5C0CDA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFC27F90-9A0D-439C-B7F2-7ACFCF5C0CDA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFC27F90-9A0D-439C-B7F2-7ACFCF5C0CDA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD430F1F-DB1D-4498-A042-9D81AF7B65A5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61F4CF94-C9DE-486B-BF97-5F716F36E34F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61F4CF94-C9DE-486B-BF97-5F716F36E34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61F4CF94-C9DE-486B-BF97-5F716F36E34F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61F4CF94-C9DE-486B-BF97-5F716F36E34F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {95DA67F0-9EFC-4DC6-A86D-F05C1B76E0E0}
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
 	EndGlobalSection
 EndGlobal
