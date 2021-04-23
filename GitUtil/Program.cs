@@ -7,7 +7,11 @@ namespace Dsi.GitUtil {
         static async Task Main(string[] args) {
             var options = Dsi.Utility.ProcessArgs.Parse(args);
 
-            var repos = Directory.GetDirectories(@"c:/repos/SqlServer2CSharp");
+            if(!options.ContainsKey("--path"))
+                throw new Exception("--path is required");
+            var path = options["--path"];
+            var repos = Directory.GetDirectories(path);
+            
             foreach (var dir in repos) {
                 var gh = new GitHub(dir.Filepath);
                 var git = new Git(dir.Filepath);
@@ -27,8 +31,9 @@ namespace Dsi.GitUtil {
                 Console.WriteLine($"[DEBUG] Delete {dir.Filepath}");
                 Directory.RemoveDirectory(dir.Filepath);
                 Console.WriteLine("===========================");
-              
             }
+            Console.WriteLine("Done ...");
+            //Console.Read();
         }
     }
 }
