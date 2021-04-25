@@ -10,57 +10,79 @@ namespace Dsi.GitUtil {
 
         Process proc = new Process();
         public string Path { get; set; }
+        public ProcessResponse ProcessResponse = new ProcessResponse();
 
-        private string Execute(string gitCommand, string args) {
+        private void Execute(string gitCommand, string args) {
             proc.StartInfo.Arguments = $"-C {Path} {gitCommand} {args}";
             proc.Start();
+            string stdout = proc.StandardOutput.ReadToEnd();
+            string stderr = proc.StandardError.ReadToEnd();
+            SetProcessResponse(gitCommand, proc.ExitCode, stdout, stderr);
             proc.WaitForExit();
-            string result = proc.StandardOutput.ReadToEnd();
-            Console.WriteLine($"[DEBUG] git command: {gitCommand} response: {result}");
-            return result.Trim();
+        }
+
+        private void SetProcessResponse(string gitCommand, int exitCode, string stdout, string stderr) {
+            ProcessResponse.GitCommand = gitCommand;
+            ProcessResponse.ExitCode = exitCode;
+            ProcessResponse.SetStandardOutput(stdout);
+            ProcessResponse.SetStandardError(stderr);
         }
 
         public bool AddRemote(string GitHubRepo) {
-            var result = Execute("remote", $"add origin {GitHubRepo}");
-            return result.Trim().Length == 0;
+            Execute("remote", $"add origin {GitHubRepo}");
+            return ProcessResponse.ExitCode == 0;
+        }
+
+        public bool Pull() {
+            var branch = CurrentBranch();
+            Execute("pull", $"origin {branch}");
+            return ProcessResponse.ExitCode == 0;
         }
 
         public bool Push() {
             var branch = CurrentBranch();
-            var result = Execute("push", $"origin {branch}");
-            return result.Trim().Length != 0;
+            Execute("push", $"origin {branch}");
+            return ProcessResponse.ExitCode == 0;
         }
 
         public string CurrentBranch() {
-            var result = Execute("branch", "--show-current");
-            return result.Trim();
+            Execute("branch", "--show-current");
+            return ProcessResponse.StandardOutput[0];
         }
 
         public bool Commit() {
-            var result = Execute("commit", "-q -m \"Committed by GitUtil\"");
-            return result.Trim().Length != 0;
+            Execute("commit", "-q -m \"Committed by GitUtil\"");
+            return ProcessResponse.ExitCode == 0;
         }
 
         public bool Stage() {
-            var result = Execute("add", ".");
-            return result.Trim().Length == 0;
+            Execute("add", ".");
+            return ProcessResponse.ExitCode == 0;
         }
 
         public bool HasRemote() {
-            var result = Execute("remote", "-v");
-            return result.Trim().Length != 0;
+            Execute("remote", "-v");
+            return ProcessResponse.ExitCode == 0;
         }
 
         public bool IsClean() {
-            var result = Execute("status", "-s");
-            return result.Trim().Length == 0;
+            Execute("status", "-s");
+            return ProcessResponse.ExitCode == 0 && ProcessResponse.StandardOutput.Count == 0;
         }
 
         private void SetGitProgramName() {
-            if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
+            if(RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
                 proc.StartInfo.FileName = "Git.exe";
-            } else { 
+            } else {
                 proc.StartInfo.FileName = "/usr/bin/git";
+            }
+        }
+
+        void Proc_Exited(object? sender, EventArgs args) {
+            var proc = sender as Process;
+            if(proc == null) return;
+            if(proc.ProcessName.Contains("Exception")) {
+                throw new Exception(proc.ProcessName);
             }
         }
 
@@ -70,7 +92,10 @@ namespace Dsi.GitUtil {
             proc.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.RedirectStandardError = true;
             proc.StartInfo.CreateNoWindow = true;
+            //proc.EnableRaisingEvents = true;
+            //proc.Exited += Proc_Exited;
         }
     }
 }
