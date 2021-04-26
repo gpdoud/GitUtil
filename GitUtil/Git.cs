@@ -17,8 +17,8 @@ namespace Dsi.GitUtil {
             proc.Start();
             string stdout = proc.StandardOutput.ReadToEnd();
             string stderr = proc.StandardError.ReadToEnd();
-            SetProcessResponse(gitCommand, proc.ExitCode, stdout, stderr);
             proc.WaitForExit();
+            SetProcessResponse(gitCommand, proc.ExitCode, stdout, stderr);
         }
 
         private void SetProcessResponse(string gitCommand, int exitCode, string stdout, string stderr) {
@@ -47,6 +47,7 @@ namespace Dsi.GitUtil {
 
         public string CurrentBranch() {
             Execute("branch", "--show-current");
+            Debug.Assert(!ProcessResponse.StandardOutput.Equals(string.Empty), "StandardOutput has no data!");
             return ProcessResponse.StandardOutput[0];
         }
 

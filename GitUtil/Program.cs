@@ -26,7 +26,9 @@ namespace Dsi.GitUtil {
                 }
                 git.Pull();
                 git.Push();
-                Directory.RemoveDirectory(dir.Filepath);
+                if(options.ContainsKey("--delete-directory")) {
+                    Directory.RemoveDirectory(dir.Filepath);
+                }
             }
             Console.WriteLine("Done ...");
             //Console.Read();
