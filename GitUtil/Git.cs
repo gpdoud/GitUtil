@@ -63,7 +63,8 @@ namespace Dsi.GitUtil {
 
         public bool HasRemote() {
             Execute("remote", "-v");
-            return ProcessResponse.ExitCode == 0;
+            return ProcessResponse.ExitCode == 0
+                && ProcessResponse.StandardOutput.Count > 0;
         }
 
         public bool IsClean() {

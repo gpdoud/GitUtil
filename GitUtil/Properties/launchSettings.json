@@ -2,7 +2,7 @@
   "profiles": {
     "GitUtil": {
       "commandName": "Project",
-      "commandLineArgs": "--path c:/repos/zprojects --delete-directory"
+      "commandLineArgs": "--path c:/_repos/0-zprojects --delete-directory"
     }
   }
 }
