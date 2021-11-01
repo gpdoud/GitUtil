@@ -12,6 +12,9 @@
     <RootNamespace>Dsi.GitUtil</RootNamespace>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
   <ItemGroup>
     <None Remove="..\.editorconfig" />
   </ItemGroup>

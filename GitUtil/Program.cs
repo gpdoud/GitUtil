@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 
 namespace Dsi.GitUtil {
+    // gitutil --path [folder] --extension [string] --delete-directory
     class Program {
         static async Task Main(string[] args) {
             var options = Dsi.Utility.ProcessArgs.Parse(args);
@@ -10,6 +11,12 @@ namespace Dsi.GitUtil {
             if(!options.ContainsKey("--path"))
                 throw new Exception("--path is required");
             var path = options["--path"];
+            Console.WriteLine($"--path is {path}");
+            if(options.ContainsKey("--delete-directory")) {
+                Console.WriteLine("ALERT!: Repository will be deleted!");
+            }
+            // allow setting custom string to append to github repository
+            var ext = (options.ContainsKey("--extension") ? options["--extension"] : null);
             var repos = Directory.GetDirectories(path);
 
             foreach(var dir in repos) {
@@ -17,7 +24,7 @@ namespace Dsi.GitUtil {
                 var git = new Git(dir.Filepath);
                 Console.WriteLine($"Directory: {dir.Filepath} ...");
                 if(!git.HasRemote()) {
-                    dir.GitHubUrl = await gh.CreateRepo(dir.Name);
+                    dir.GitHubUrl = await gh.CreateRepo(dir.Name, ext);
                     git.AddRemote(dir.GitHubUrl);
                 }
                 if(!git.IsClean()) {
