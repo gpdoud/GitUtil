@@ -3,13 +3,15 @@
   <PropertyGroup>
     <PublishSingleFile>true</PublishSingleFile>
     <SelfContained>true</SelfContained>
-    <RuntimeIdentifier>osx-x64</RuntimeIdentifier>
+    <!--<RuntimeIdentifier>osx-x64</RuntimeIdentifier>-->
+    <RuntimeIdentifier>win-x64</RuntimeIdentifier>
     <PublishedTrimmed>true</PublishedTrimmed>
     <PublishReadyToRun>true</PublishReadyToRun>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <RootNamespace>Dsi.GitUtil</RootNamespace>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
