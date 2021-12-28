@@ -8,6 +8,11 @@ namespace Dsi.GitUtil {
         static async Task Main(string[] args) {
             var options = Dsi.Utility.ProcessArgs.Parse(args);
 
+            if(options.Count == 0) {
+                Console.WriteLine("GitUtil --path [directory] --extension [ext] --delete-directory");
+                return;
+            }
+
             if(!options.ContainsKey("--path"))
                 throw new Exception("--path is required");
             var path = options["--path"];
