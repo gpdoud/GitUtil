@@ -2,7 +2,7 @@
   "profiles": {
     "GitUtil": {
       "commandName": "Project",
-      "commandLineArgs": "--path c:/_repos/0-zprojects --delete-directory"
+      "commandLineArgs": "--path Banking-C37 --extension c99"
     }
   }
 }
