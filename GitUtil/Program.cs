@@ -5,11 +5,14 @@ using System.Threading.Tasks;
 namespace Dsi.GitUtil {
     // gitutil --path [folder] --extension [string] --delete-directory
     class Program {
+        
+        static string version = "1.0";
+
         static async Task Main(string[] args) {
             var options = Dsi.Utility.ProcessArgs.Parse(args);
 
             if(options.Count == 0) {
-                Console.WriteLine("GitUtil --path [directory] --extension [ext] --delete-directory");
+                Console.WriteLine($"GitUtil v{version} --path [directory] --extension [ext] --delete-directory");
                 return;
             }
 
