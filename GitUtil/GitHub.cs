@@ -20,8 +20,8 @@ namespace Dsi.GitUtil {
         };
 
 
-        public async Task<string> CreateRepo(string name) {
-            name = $"{name}-{DateTime.Now.Ticks}";
+        public async Task<string> CreateRepo(string name, string? extension = null) {
+            name = $"{name}-{(extension != null ? extension : DateTime.Now.Ticks)}";
             var repo = new { name };
             var json = JsonSerializer.Serialize(repo, options);
             var res = await Post($"/user/repos", json);
