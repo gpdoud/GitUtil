@@ -8,8 +8,8 @@ namespace Dsi.GitUtil.Security {
     
     public class Tokens {
 
-        public static string GhTokenLeft =  "ghp_RcqbeeYm5nS3EV";
-        public static string GHTokenRight = "RKtJJBkeDi6ygh4s0NASoA";
+        private static string GhTokenLeft =  "ghp_RcqbeeYm5nS3EV";
+        private static string GHTokenRight = "RKtJJBkeDi6ygh4s0NASoA";
         public static string GitHub = GhTokenLeft + GHTokenRight;
 
     }

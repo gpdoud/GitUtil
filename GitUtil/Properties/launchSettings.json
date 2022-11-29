@@ -1,8 +1,7 @@
 {
   "profiles": {
     "GitUtil": {
-      "commandName": "Project",
-      "commandLineArgs": "--path Banking-C37 --extension c99"
+      "commandName": "Project"
     }
   }
 }

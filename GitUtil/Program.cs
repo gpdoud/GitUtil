@@ -2,6 +2,8 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 
+using static System.Console;
+
 namespace Dsi.GitUtil {
     // gitutil --path [folder] --extension [string] --delete-directory
     class Program {
@@ -12,16 +14,18 @@ namespace Dsi.GitUtil {
             var options = Dsi.Utility.ProcessArgs.Parse(args);
 
             if(options.Count == 0) {
-                Console.WriteLine($"GitUtil v{version} --path [directory] --extension [ext] --delete-directory");
+                WriteLine($"GitUtil v{version} --path [directory] --extension [ext] --delete-directory");
                 return;
             }
 
-            if(!options.ContainsKey("--path"))
-                throw new Exception("--path is required");
+            if(!options.ContainsKey("--path")) {
+                WriteLine("ERROR! : --path [directory] is required");
+                return;
+            }
             var path = options["--path"];
-            Console.WriteLine($"--path is {path}");
+            WriteLine($"--path is {path}");
             if(options.ContainsKey("--delete-directory")) {
-                Console.WriteLine("ALERT!: Repository will be deleted!");
+                WriteLine("ALERT!: Repository will be deleted!");
             }
             // allow setting custom string to append to github repository
             var ext = (options.ContainsKey("--extension") ? options["--extension"] : null);
@@ -30,7 +34,7 @@ namespace Dsi.GitUtil {
             foreach(var dir in repos) {
                 var gh = new GitHub(dir.Filepath);
                 var git = new Git(dir.Filepath);
-                Console.WriteLine($"Directory: {dir.Filepath} ...");
+                WriteLine($"Directory: {dir.Filepath} ...");
                 if(!git.HasRemote()) {
                     dir.GitHubUrl = await gh.CreateRepo(dir.Name, ext);
                     git.AddRemote(dir.GitHubUrl);
